@@ -20,7 +20,7 @@ Key features
 - Hoeffding deviation bound utility helpers (not used by the "paper" scorer unless you adapt it).
 - Robust CLI and modular design for reproducibility and extension.
 
-Usage (examples)
+Usage 
 ----------------
 1) Run on a CSV/TSV/XLSX/NPY/NPZ containing at least a probability column and a binary label column:
 
@@ -46,7 +46,6 @@ Notes
 - Class-space probability is p_c = P(Y=c | x). For the negative class we use p_c = 1 - P(Y=1|x),
   and the search domain is [0.5,1] for both classes in their respective class-spaces.
 
-Author: your_name_here
 """
 
 from __future__ import annotations
@@ -632,3 +631,4 @@ def main(argv: Optional[Iterable[str]] = None) -> None:
 
 if __name__ == "__main__":
     main()
+
