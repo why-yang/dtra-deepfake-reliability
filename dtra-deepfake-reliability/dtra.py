@@ -20,31 +20,6 @@ Key features
 - Hoeffding deviation bound utility helpers (not used by the "paper" scorer unless you adapt it).
 - Robust CLI and modular design for reproducibility and extension.
 
-Usage 
-----------------
-1) Run on a CSV/TSV/XLSX/NPY/NPZ containing at least a probability column and a binary label column:
-
-    python dtra.py --input calib.csv --label-one-means real \
-        --label-col label --prob-col prob --nmin 150 \
-        --strategy paper --lambda 0.1 --delta 0.05 \
-        --out-json out.json --dump-bins bins.csv
-
-2) If you do not provide --input, a synthetic calibration set will be generated for demonstration:
-
-    python dtra.py --nmin 100 --strategy paper
-
-Outputs
--------
-- JSON summary to stdout (and optionally to --out-json).
-- Optional dump of per-class equal-frequency bins (--dump-bins).
-
-Notes
------
-- The "paper" scorer strictly implements Eq.(5). If you prefer a conservative variant,
-  you may substitute interval precision p̂ by its Hoeffding lower bound inside _Scorer.
-- Positive class is y=1 (e.g., "real"); negative class is y=0 (e.g., "fake").
-- Class-space probability is p_c = P(Y=c | x). For the negative class we use p_c = 1 - P(Y=1|x),
-  and the search domain is [0.5,1] for both classes in their respective class-spaces.
 
 """
 
@@ -66,9 +41,6 @@ except Exception:
     pd = None
 
 
-# ----------------------------------------------------------------------
-# Utilities
-# ----------------------------------------------------------------------
 
 def as_np(a: Any) -> np.ndarray:
     return np.asarray(a)
@@ -252,10 +224,6 @@ def build_class_space_bins(p_class: np.ndarray, y_class: np.ndarray, nmin: int) 
 
     return out
 
-
-# ----------------------------------------------------------------------
-# Scorers (paper Eq.(5) and engineering baselines)
-# ----------------------------------------------------------------------
 
 class Scorer:
     """
@@ -631,4 +599,5 @@ def main(argv: Optional[Iterable[str]] = None) -> None:
 
 if __name__ == "__main__":
     main()
+
 
